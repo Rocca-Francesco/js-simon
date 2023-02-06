@@ -1,47 +1,37 @@
 
-// prendo in considerazione l'orario di inizio lezione
-const lessonStart = Date.parse("February 7, 2023 9:30 AM");;
+// assegno un intervallo in cui il contatore viene aggiornato
+const timer = setInterval(myCountdown, 1000);
 
-// prendo i dati relativi all'ora che voglio raggiungere
-// const daysLesson = lessonStart.getDay();
-// console.log(daysLesson);
-// const hoursLesson = lessonStart.getHours();
-// console.log(hoursLesson);
-// const minutesLesson = lessonStart.getMinutes();
-// console.log(minutesLesson);
-// const secondsLesson = lessonStart.getSeconds();
-// console.log(secondsLesson);
+function myCountdown() {
+    // prendo le date interessate
+    let today = new Date();
+    let tomorrow = new Date("2023-02-07 9:30");
 
-// prendo in considerazione l'orario attuale
-const adesso = Date.now();
+    // trasformo le date interessate in millisecondi
+    today = today.getTime();
+    tomorrow = tomorrow.getTime();
 
-// prendo i dati relativi all'ora attuale
-// const daysAdesso = adesso.getDay();
-// console.log(daysAdesso);
-// const hoursAdesso = adesso.getHours();
-// console.log(hoursAdesso);
-// const minutesAdesso = adesso.getMinutes();
-// console.log(minutesAdesso);
-// const secondsAdesso = adesso.getSeconds();
-// console.log(secondsAdesso);
+    // calcolo i millisecondi di differenza
+    const timeLeft = tomorrow - today;
 
-// confronto l'attuale con quella da raggiungere
-let daysCountdown = daysLesson % daysAdesso;
-let hoursCountdown = 24 % hoursAdesso;
-let minutesCountdown = 60 % minutesAdesso;
-let secondsCountdown = 60 % secondsAdesso;
+    // trasformo tutto in secondi
+    const secondsLeft = Math.floor(timeLeft / 1000);
 
-// imposto l'intervallo ogni quanto dovrò stampare, un secondo
-const countdownStampa = setInterval(stampaAdesso, 1000);
+    // calcolo in tempo reale la differanza
+    const sec = secondsLeft % 60;
+    const min = Math.floor((secondsLeft / 60) % 60);
+    const hours = Math.floor((secondsLeft / 60 / 60) % 24);
+    const days = Math.floor(secondsLeft / 60 / 60 / 24);
+    console.log(days, hours, min, sec);
 
-function stampaAdesso() {
-    // prendo i miei elementi dove stampero il countdown
-    document.getElementById("days").innerHTML = daysCountdown;
-    document.getElementById("hours").innerHTML = hoursCountdown + ":";
-    document.getElementById("minutes").innerHTML = minutesCountdown + ":";
-    document.getElementById("seconds").innerHTML = secondsCountdown;
-}
+    // prendo gli elemnti dove scriverò il mio countdown
+    document.getElementById("days").innerHTML = days;
+    document.getElementById("hours").innerHTML = hours;
+    document.getElementById("minutes").innerHTML = min;
+    document.getElementById("seconds").innerHTML = sec;
 
-
-console.log(now);
-console.log(lesson);
+    // in caso di fine del countdown, fermo il refresh
+    if (days == 0 && hours == 0 && min == 0 && sec == 0) {
+        clearInterval(timer);
+    };
+};
